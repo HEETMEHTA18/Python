@@ -91,21 +91,58 @@ def get_gateway_mac(ip):
         return mac
     return get_mac_from_arp_table(ip)
 
+def detect_default_gateway():
+    system = platform.system().lower()
+    try:
+        if system == "windows":
+            cmd = ["powershell", "-NoProfile", "-Command",
+                   "(Get-NetIPConfiguration | Where-Object { $_.IPv4DefaultGateway } | Select-Object -First 1).IPv4DefaultGateway.NextHop"]
+            out = subprocess.check_output(cmd, text=True, errors="ignore").strip()
+            return out or None
+        elif system == "linux":
+            out = subprocess.check_output(["/bin/sh", "-c", "ip route | awk '/^default/ {print $3; exit}'"], text=True, errors="ignore").strip()
+            return out or None
+        elif system == "darwin":
+            out = subprocess.check_output(["/usr/sbin/route", "-n", "get", "default"], text=True, errors="ignore")
+            for line in out.splitlines():
+                if line.strip().startswith("gateway:"):
+                    return line.split()[1].strip()
+    except Exception:
+        return None
+    return None
+
 def main():
     parser = argparse.ArgumentParser(description="Monitor gateway MAC to detect ARP spoofing attempts.")
-    parser.add_argument("--gateway", required=True, help="Gateway/router IPv4 address, e.g., 192.168.1.1")
+    parser.add_argument("--gateway", help="Gateway/router IPv4 address, e.g., 192.168.1.1")
     parser.add_argument("--interval", type=int, default=5, help="Seconds between checks (default: 5)")
     parser.add_argument("--expect", help="(Optional) Expected gateway MAC; alert immediately if different")
     parser.add_argument("--log", dest="logfile", help="(Optional) Path to log file")
     parser.add_argument("--once", action="store_true", help="Check once and exit")
+    parser.add_argument("--auto-detect", action="store_true", help="If provided gateway is unreachable, try system default gateway")
     args = parser.parse_args()
 
     gateway_ip = args.gateway
+    if not gateway_ip and args.auto_detect:
+        gateway_ip = detect_default_gateway()
+        if gateway_ip:
+            log(f"Auto-detected gateway: {gateway_ip}", args.logfile)
+
+    if not gateway_ip:
+        parser.error("No gateway specified and auto-detect not enabled or failed.")
+
     expected = normalize_mac(args.expect) if args.expect else None
     baseline = None
 
     # Initial read
     mac = get_gateway_mac(gateway_ip)
+    if not mac and args.auto_detect:
+        # try detecting system default gateway and retry once
+        gw2 = detect_default_gateway()
+        if gw2 and gw2 != gateway_ip:
+            log(f"Retrying with detected gateway {gw2}", args.logfile)
+            gateway_ip = gw2
+            mac = get_gateway_mac(gateway_ip)
+
     if not mac:
         log(f"Could not resolve MAC for gateway {gateway_ip}. Is the IP correct and reachable?", args.logfile)
         sys.exit(1)
