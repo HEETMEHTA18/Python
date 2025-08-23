@@ -130,7 +130,13 @@ If you plan to share/distribute, consider adding a license (MIT is a good defaul
 
 ## 👤 Author
 
-[@HEETMEHTA18](https://github.com/HEETMEHTA18)  
+Heet Mehta
 
 ---
+
+## 🌐 GitHub Profile
+
+https://github.com/HEETMEHTA18
+
+<!--
 
