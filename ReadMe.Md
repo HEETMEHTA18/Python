@@ -87,28 +87,6 @@ Quick command examples (PowerShell):
 
 ---
 
-## ⚙️ arp_watch (example utility)
-
-This repository includes a small utility `Basics/arp_watch/arp_watch.py` (monitor gateway MAC for ARP spoofing). Usage examples:
-
-```powershell
-# Monitor explicit gateway once
-python "Basics/arp_watch/arp_watch.py" --gateway "10.50.30.1" --once
-
-# Continuous monitoring with logging
-python "Basics/arp_watch/arp_watch.py" --gateway "10.50.30.1" --interval 5 --log arp_watch.log
-
-# Auto-detect system default gateway
-python "Basics/arp_watch/arp_watch.py" --auto-detect --interval 5 --log arp_watch.log
-```
-
-Notes:
-- On Windows, avoid literal angle brackets in PowerShell (use actual IP or variable).
-- Install Npcap + Scapy to enable active ARP probing.
-
-
----
-
 ## 🤝 Contributing
 
 Contributions are welcome! To contribute:
@@ -121,22 +99,7 @@ Contributions are welcome! To contribute:
 
 ---
 
-## 📜 License
 
-This project is currently unlicensed.  
-If you plan to share/distribute, consider adding a license (MIT is a good default).
-
----
 
 ## 👤 Author
-
-Heet Mehta
-
----
-
-## 🌐 GitHub Profile
-
-https://github.com/HEETMEHTA18
-
-<!--
-
+[HEETMEHTA](https://github.com/HEETMEHTA18)  
