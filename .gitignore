@@ -44,10 +44,126 @@ Thumbs.db
 
 #python
 
+# Byte-compiled / optimized / DLL files
 __pycache__/
-**/__pycache__/
+*.py[cod]
+*$py.class
 
-*/migrations/*
-.env
+# C extensions
+*.so
 
+# Distribution / packaging
+.Python
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+pip-wheel-metadata/
+wheels/
+
+# Virtualenv / environments
 env/
+venv/
+ENV/
+.venv/
+venv.bak/
+env.bak/
+.env
+.env.*
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Misccredentials.jsonsecrets.*# Secrets / credentials.pyre/.mypy_cache/# Type checkers / analysislocal_settings.pydb.sqlite3-journaldb.sqlite3# Database / local configtest.log*.log# Logs and runtime filesThumbs.db.DS_Store# OS files*.sublime-workspace*.sublime-project.idea/.vscode/# IDEs / editors.ipynb_checkpoints# Jupyter*,covercoverage.xmlnosetests.xml.pytest_cache/.pytest_cache/
+nosetests.xml
+coverage.xml
+*,cover
+
+# Jupyter
+.ipynb_checkpoints
+
+# IDEs / editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and runtime files
+*.log
+test.log
+
+# Database / local config
+db.sqlite3
+db.sqlite3-journal
+local_settings.py
+
+# Type checkers / analysis
+.mypy_cache/
+.pyre/
+
+# Secrets / credentials
+secrets.*
+credentials.json
+
+# Misc
